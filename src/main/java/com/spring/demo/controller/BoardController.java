@@ -3,6 +3,7 @@ package com.spring.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.demo.service.BoardService;
 import com.spring.demo.vo.BoardVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/board")
+@Slf4j
 public class BoardController {
 
 	@Autowired
@@ -27,10 +31,22 @@ public class BoardController {
 		return "thymeleaf/index";
 	}
 
+	@GetMapping("/blist2")
+	private String listBoard2(Model m) {
+		m.addAttribute("list", bs.listBoard2());
+		return "thymeleaf/board/boardlist2";
+	}
+
 	@GetMapping("/blist")
 	private String listBoard(Model m) {
-		m.addAttribute("list", bs.listBoard());
 		return "thymeleaf/board/boardlist";
+	}
+
+	@GetMapping("/listboard")
+	@ResponseBody
+	private JSONArray listBoard() {
+		log.info(bs.listBoard().toJSONString());
+		return bs.listBoard();
 	}
 
 	@GetMapping("/bdetail/{bnum}")

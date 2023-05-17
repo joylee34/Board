@@ -2,26 +2,119 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>게시글 목록</title>
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/themes/redmond/jquery-ui.css" type="text/css" />
+ <!-- jqGrid CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/jqgrid/4.6.0/css/ui.jqgrid.css" type="text/css" />
+<!-- The actual JQuery code -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js" /></script>
+<!-- The JQuery UI code -->
+<script type="text/javascript" src="https://code.jquery.com/ui/1.10.3/jquery-ui.min.js" /></script>
+<!-- The jqGrid language file code-->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jqgrid/4.6.0/i18n/grid.locale-kr.js" /></script>
+<!-- The actual jqGrid code -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/jqgrid/4.6.0/jquery.jqGrid.src.js" /></script>
+<script type="text/javascript">
+var $Grid = {};
+$(document).ready(function(){
+     $Grid = $('#grid');
+     $Grid.jqGrid({
+          url : '/board/listboard',
+          datatype : "json",
+          mtype : "get",
+          jsonReader : {
+               id : "id" // 대표 아이디를 설정
+               ,root : "employee" // 데이터의 시작을 설정
+          },
+          colNames : ['글번호','제목', '작성자', '게시일'],
+          colModel : [
+              {name:'bnum', width:90, align:'right'},
+              {name:'btitle', align:'right'},
+              {name:'bauthor', align:'right'},
+              {name:'btime', align:'right'} 
+          ],
+          /*
+          pager : '#pager',
+          rowNum : '10',
+          multiselect : true,
+          postData : {
+               id : 'id',
+               name : 'name'
+          }*/
+          autowidth: true,
+  		  rownumbers : true,
+  		  multiselect:true,
+  		  pager:'#pager',
+  		  rowNum: 10,
+  		  rowList: [10, 20, 50],
+  		  sortname: 'id',
+  		  sortorder: 'asc',
+  		  height: 500,
+          caption: "게시판"
+    });
+});
+/*
+$(function(){
+
+	  $.ajax({
+    	  url: '/board/listboard',
+			method: 'get',
+			
+			dataType: 'json',	//이렇게 하면 res를 json object로 바로 받아오기 때문에 JSON.parse() 할 필요 없다.
+			cache: false,
+        	success: function(res){
+            getBoards(res);
+	        },
+	        error: function(e){
+	           $('#commentUpload').prop('disabled', false);
+	           alert('댓글 작성 실패...');
+	        }
+         
+      });
+	
+	});
+	
+	function getBoards(blist)
+	{
+		alert(blist[2]);
+		$("#list").jqGrid({
+			datatype: "json",
+			data: blist,
+            colNames:['글번호','제목', '작성자', '게시일'],
+            colModel:[
+                {name:'bnum', index:'bnum', width:90, align:'right'},
+                {name:'btitle', index:'date', width:90, align:'right'},
+                {name:'bauthor', index:'bauthor', width:90, align:'right'},
+                {name:'btime', index:'btime', width:90, align:'right'} 
+            ],
+            autowidth: true,
+    		rownumbers : true,
+    		multiselect:true,
+    		pager:'#pager',
+    		rowNum: 10,
+    		rowList: [10, 20, 50],
+    		sortname: 'id',
+    		sortorder: 'asc',
+    		height: 250,
+            caption: "게시판"
+      });
+
+		$(window).on('resize.jqGrid', function() {
+				$("#list").jqGrid('setGridWidth', $("#list").parent().parent().parent().parent().parent().width());
+			})
+			$(".jarviswidget-fullscreen-btn").click(function(){
+				setTimeout(function() {
+					$("#list").jqGrid('setGridWidth', $("#list").parent().parent().parent().parent().parent().width());
+				}, 100);
+			});
+	}
+*/
+</script>
 </head>
 <body>
-<main>
-	<h3>게시글 목록</h3>
-	<table>
-			<tr>
-				<th>글번호</th><th>제목</th><th>작성자</th><th>게시일</th>
-			</tr>
-			<div th:each="board : ${list}">
-				<tr>
-					<td>[[${board.bnum}]]</td>
-					<td>[[${board.btitle}]]</td>
-					<td>[[${board.bauthor}]]</td>
-					<td>[[${board.btime}]]</td>
-				</tr>
-			</div>
-	</table>
-	
-	<button type='button' onclick='location.href="/board/addform"'>게시물 작성</button>
-</main>
+	<main>
+	<table id="grid"></table>
+	<div id="pager"></div>
+	</main>
 </body>
 </html>
