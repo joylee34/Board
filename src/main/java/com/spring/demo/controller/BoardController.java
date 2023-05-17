@@ -69,14 +69,17 @@ public class BoardController {
 	}
 
 	@GetMapping("/editform/{bnum}")
-	private String editForm(int bnum, Model m) {
+	private String editForm(@PathVariable int bnum, Model m) {
 		m.addAttribute("board", bs.getBoard(bnum));
 		return "thymeleaf/board/editform";
 	}
 
 	@PostMapping("/update")
-	private boolean updateBoard(BoardVO board) {
-		return bs.updateBoard(board);
+	@ResponseBody
+	private Map<String, Boolean> updateBoard(BoardVO board) {
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("updated", bs.updateBoard(board));
+		return map;
 	}
 
 	@GetMapping("/delete/{bnum}")
