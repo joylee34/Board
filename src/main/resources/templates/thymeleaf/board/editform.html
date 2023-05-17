@@ -3,10 +3,54 @@
 <head>
 <meta charset="utf-8">
 <title>게시물 수정</title>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+	function formcheck()
+	{
+		var btitle = $('#btitle').val();
+        var btext = $('#btext').val();
+     
+        if(btitle==''|| btext==''){
+         alert('빈칸 모두 채워주세요 :)');
+         return false;
+        }
+        return true;
+     }
+     
+	function update()
+	{
+		if(!formcheck()) return;
+		var serData = $('#editForm').serialize();
+		$('#btnUpload').prop('disabled', true);
+		$.ajax({
+			url: '/board/update',
+			method: 'post',
+			data: serData,
+			dataType: 'json',	//이렇게 하면 res를 json object로 바로 받아오기 때문에 JSON.parse() 할 필요 없다.
+			cache: false,
+			
+			success: function(res){
+				if(res.updated){
+					alert('업데이트 성공 :)');
+					location.href = "/board/blist";
+				}
+				else{
+					alert('업데이트 실패 :(');
+				}
+			}, 
+			error: function(xhr,status,err){
+				alert(err);
+			}
+		})
+		
+		return false;
+	}
+</script>
 </head>
 <body>
 <main>
-	<form id='editForm'>
+	<form id='editForm' onsubmit='return update();'>
 	<input type='hidden' id='bnum' name='bnum' th:value='${board.bnum}'>
 		<div>
 			<label for='btitle'>제 목</label>
@@ -25,7 +69,7 @@
 		
 		<div class='btn'>
 			<button type='reset'>취 소</button>
-			<button id='btnUpload' type='button'>등 록</button>
+			<button id='btnUpload' type='submit'>등 록</button>
 		</div>
 	</form>
 </main>
