@@ -11,12 +11,12 @@
 			<tr>
 				<th>글번호</th><th>제목</th><th>작성자</th><th>게시일</th>
 			</tr>
-			<div th:each="b : ${list}">
+			<div th:each="board : ${list}">
 				<tr>
-					<td>[[${b.bnum}]]</td>
-					<td>[[${b.btitle}]]</td>
-					<td>[[${b.bauthor}]]</td>
-					<td>[[${b.btime}]]</td>
+					<td>[[${board.bnum}]]</td>
+					<td>[[${board.btitle}]]</td>
+					<td>[[${board.bauthor}]]</td>
+					<td>[[${board.btime}]]</td>
 				</tr>
 			</div>
 	</table>
