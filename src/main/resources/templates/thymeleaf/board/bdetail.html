@@ -21,7 +21,16 @@
 		<div>
 			<textarea id='btext' name='btext' rows='50' cols='100'>[[${board.btext}]]</textarea>
 		</div>
-
+		 [<a th:href="@{'/board/blist'}" target="_self" >
+              목록
+         </a>]
+		 [<a th:href="@{'/board/editform/'+${board.bnum}}" target="_self" >
+              수정
+         </a>]
+         [<a th:href="@{'/board/deleteboard'+${board.bnum}}" target="_self" >
+              삭제
+         </a>]
+         
 </main>
 </body>
 </html>

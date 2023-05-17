@@ -33,6 +33,18 @@ $(document).ready(function(){
               {name:'bauthor', align:'right'},
               {name:'btime', align:'right'} 
           ],
+          beforeSelectRow: function(rowid, e) {
+        	  var rowData = $Grid.jqGrid('getRowData', rowid);
+        	  var bnum = rowData.bnum;
+
+        	  // Generate the link URL using the bnum value
+        	  var link = '/board/bdetail/' + bnum;
+        	  
+        	  // Navigate to the link URL
+        	  window.location.href = link;
+
+        	  return false; // Prevent row selection
+          },
           /*
           pager : '#pager',
           rowNum : '10',
@@ -115,6 +127,11 @@ $(function(){
 	<main>
 	<table id="grid"></table>
 	<div id="pager"></div>
+	<div>
+	[<a th:href="@{'/board/addform'}" target="_self" >
+              게시글 작성
+     </a>]
+	</div>
 	</main>
 </body>
 </html>
