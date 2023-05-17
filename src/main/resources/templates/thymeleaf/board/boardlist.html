@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>게시글 목록</title>
+</head>
+<body>
+<main>
+	<h3>게시글 목록</h3>
+	<table>
+			<tr>
+				<th>글번호</th><th>제목</th><th>작성자</th><th>게시일</th>
+			</tr>
+			<div th:each="b : ${list}">
+				<tr>
+					<td>[[${b.bnum}]]</td>
+					<td>[[${b.btitle}]]</td>
+					<td>[[${b.bauthor}]]</td>
+					<td>[[${b.btime}]]</td>
+				</tr>
+			</div>
+	</table>
+	
+	<button type='button' onclick='location.href="/board/addform"'>게시물 작성</button>
+</main>
+</body>
+</html>

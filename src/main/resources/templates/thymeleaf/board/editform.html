@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>게시물 수정</title>
+</head>
+<body>
+<main>
+	<form id='editForm'>
+	<input type='hidden' id='bnum' name='bnum' th:value='${board.bnum}'>
+		<div>
+			<label for='btitle'>제 목</label>
+			<input type='text' id='btitle' name='btitle' th:value='${board.btitle}'>
+		</div>
+		<div>
+			<label for='bauthor'>작성자</label>
+			<span id='bauthor'>[[${board.bauthor}]]</span>
+		</div>
+		<div>
+			<label for='btext'>글내용</label>
+		</div>
+		<div>
+			<textarea id='btext' name='btext' rows='50' cols='100'>[[${board.btext}]]</textarea>
+		</div>
+		
+		<div class='btn'>
+			<button type='reset'>취 소</button>
+			<button id='btnUpload' type='button'>등 록</button>
+		</div>
+	</form>
+</main>
+</body>
+</html>

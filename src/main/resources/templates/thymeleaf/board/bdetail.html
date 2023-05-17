@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>게시물 상세보기</title>
+</head>
+<body>
+<main>
+
+		<div>
+			<label for='btitle'>제 목</label>
+			<span id='btitle'>[[${board.btitle}]]</span>
+		</div>
+		<div>
+			<label for='bauthor'>작성자</label>
+			<span id='bauthor'>[[${board.bauthor}]]</span>
+		</div>
+		<div>
+			<label for='btext'>글내용</label>
+		</div>
+		<div>
+			<textarea id='btext' name='btext' rows='50' cols='100'>[[${board.btext}]]</textarea>
+		</div>
+
+</main>
+</body>
+</html>

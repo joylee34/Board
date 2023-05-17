@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.demo.mapper.BoardMapper">
+	<select id="listBoard" resultType="com.spring.demo.vo.BoardVO">
+		SELECT * FROM board ORDER BY bnum DESC
+	</select>
+	<insert id="addBoard" parameterType="com.spring.demo.vo.BoardVO">
+		INSERT into board(bnum, btitle, bauthor, btext)
+		VALUES (B_BNUM_SEQ.NEXTVAL, #{btitle}, #{bauthor}, #{btext})
+	</insert>
+	<update id="updateBoard" parameterType="com.spring.demo.vo.BoardVO">
+		UPDATE board SET btitle=#{btitle}, btext=#{btext} WHERE bnum=#{bnum}
+	</update>
+	
+	<select id="getBoard" parameterType="Integer"
+		resultType="com.spring.demo.vo.BoardVO">
+		SELECT * FROM board WHERE bnum=#{bnum}
+	</select>
+	
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM board WHERE bnum=#{bnum}
+	</delete>
+</mapper>

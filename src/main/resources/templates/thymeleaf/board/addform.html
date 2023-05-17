@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>글쓰기</title>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+	function formcheck()
+	{
+		var btitle = $('#btitle').val();
+        var btext = $('#btext').val();
+     
+        if(btitle==''|| btext==''){
+         alert('빈칸 모두 채워주세요 :)');
+         return false;
+        }
+        return true;
+     }
+     
+	function upload()
+	{
+		if(!formcheck()) return;
+		var serData = $('#addForm').serialize();
+		$('#btnUpload').prop('disabled', true);
+		$.ajax({
+			url: '/board/add',
+			method: 'post',
+			data: serData,
+			dataType: 'json',	//이렇게 하면 res를 json object로 바로 받아오기 때문에 JSON.parse() 할 필요 없다.
+			cache: false,
+			
+			success: function(res){
+				if(res.uploaded){
+					alert('업로드 성공 :)');
+					location.href = "/board/blist";
+				}
+				else{
+					alert('업로드 실패 :(');
+				}
+			}, 
+			error: function(xhr,status,err){
+				alert(err);
+			}
+		})
+		
+		return false;
+	}
+</script>
+</head>
+<body>
+<main>
+	<form id='addForm' onsubmit='return upload();'>
+		<div>
+			<label for='btitle'>제 목</label>
+			<input type='text' id='btitle' name='btitle' value='제목을 입력하세요.'>
+		</div>
+		<div>
+			<label for='bauthor'>작성자</label>
+			<input type='text' id='bauthor' name='bauthor' value='joy'>
+		</div>
+		<div>
+			<label for='btext'>글내용</label>
+		</div>
+		<div>
+			<textarea id='btext' name='btext' rows='50' cols='100' placeholder='글 내용을 입력하세요.'>글 내용</textarea>
+		</div>
+		
+		<div class='btn'>
+			<button type='reset'>취 소</button>
+			<button id='btnUpload' type='submit'>등 록</button>
+		</div>
+	</form>
+</main>
+</body>
+</html>
