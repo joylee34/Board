@@ -3,6 +3,33 @@
 <head>
 <meta charset="utf-8">
 <title>게시물 상세보기</title>
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function deleteBoard(bnum)
+	{
+		$.ajax({
+			url: '/board/delete/' + bnum,
+			method: 'get',
+			dataType: 'json',	//이렇게 하면 res를 json object로 바로 받아오기 때문에 JSON.parse() 할 필요 없다.
+			cache: false,
+			
+			success: function(res){
+				if(res.deleted){
+					alert('삭제 성공 :)');
+					location.href = "/board/blist";
+				}
+				else{
+					alert('삭제 실패 :(');
+				}
+			}, 
+			error: function(xhr,status,err){
+				alert(err);
+			}
+		})
+		
+		return false;
+	}
+</script>
 </head>
 <body>
 <main>
@@ -27,7 +54,7 @@
 		 [<a th:href="@{'/board/editform/'+${board.bnum}}" target="_self" >
               수정
          </a>]
-         [<a th:href="@{'/board/deleteboard'+${board.bnum}}" target="_self" >
+         [<a th:href="|javascript:deleteBoard(${board.bnum});|" target="_self" >
               삭제
          </a>]
          

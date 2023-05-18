@@ -83,7 +83,10 @@ public class BoardController {
 	}
 
 	@GetMapping("/delete/{bnum}")
-	private boolean deleteBoard(@PathVariable int bnum) {
-		return bs.deleteBoard(bnum);
+	@ResponseBody
+	private Map<String, Boolean> deleteBoard(@PathVariable int bnum) {
+		Map<String, Boolean> map = new HashMap<>();
+		map.put("deleted", bs.deleteBoard(bnum));
+		return map;
 	}
 }
