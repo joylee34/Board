@@ -31,13 +31,13 @@ public class LoginController {
 
 	@GetMapping("/login")
 	private String loginForm() {
+		log.info("conflict 생성중");
 		return "thymeleaf/login/login";
 	}
 
 	@PostMapping("/login")
 	@ResponseBody
 	public Map<String, Boolean> login(@RequestParam String memid, @RequestParam String pwd) {
-
 		MemberVO mem = new MemberVO();
 		mem.setMemid(memid);
 		mem.setPwd(pwd);
