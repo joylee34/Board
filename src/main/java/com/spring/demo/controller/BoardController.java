@@ -83,7 +83,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/delete/{bnum}")
-	private boolean deleteBoard(int bnum) {
+	private boolean deleteBoard(@PathVariable int bnum) {
 		return bs.deleteBoard(bnum);
 	}
 }
