@@ -16,8 +16,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.spring.demo.service.LoginService;
 import com.spring.demo.vo.MemberVO;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/user")
+@Slf4j
 public class LoginController {
 
 	@Autowired
@@ -28,6 +31,7 @@ public class LoginController {
 
 	@GetMapping("/login")
 	private String loginForm() {
+		log.info("conflict 생성중");
 		return "thymeleaf/login/login";
 	}
 
