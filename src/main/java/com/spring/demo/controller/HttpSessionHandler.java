@@ -17,7 +17,7 @@ public class HttpSessionHandler implements HttpSessionListener {
 	public static Map<String, HttpSession> map = new HashMap<>();
 
 	public void sessionCreated(HttpSessionEvent se) {
-		log.info("핸들러 돌아감?");
+		log.info("핸들러 돌아감??");
 		HttpSession s = se.getSession(); // 생성된 세션을 가지고 옴
 		map.put(s.getId(), s);
 		log.info("핸들러제발돌아가라:" + map.toString());
