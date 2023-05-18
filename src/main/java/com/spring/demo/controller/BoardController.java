@@ -3,6 +3,8 @@ package com.spring.demo.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,9 @@ public class BoardController {
 	@Autowired
 	private BoardService bs;
 
+	@Autowired
+	private HttpSession session;
+
 	@GetMapping("/test")
 	private String test() {
 		return "thymeleaf/index";
@@ -39,7 +44,11 @@ public class BoardController {
 
 	@GetMapping("/blist")
 	private String listBoard(Model m) {
-		return "thymeleaf/board/boardlist";
+		if (session.getAttribute("memid") != null) {
+			m.addAttribute("list", bs.listBoard());
+			return "thymeleaf/board/boardlist";
+		} else
+			return "thymeleaf/login/login";
 	}
 
 	@GetMapping("/listboard")
@@ -51,13 +60,19 @@ public class BoardController {
 
 	@GetMapping("/bdetail/{bnum}")
 	private String getBoard(@PathVariable int bnum, Model m) {
-		m.addAttribute("board", bs.getBoard(bnum));
-		return "thymeleaf/board/bdetail";
+		if (session.getAttribute("memid") != null) {
+			m.addAttribute("board", bs.getBoard(bnum));
+			return "thymeleaf/board/bdetail";
+		} else
+			return "thymeleaf/login/login";
 	}
 
 	@GetMapping("/addform")
 	private String addForm() {
-		return "thymeleaf/board/addform";
+		if (session.getAttribute("memid") != null) {
+			return "thymeleaf/board/addform";
+		} else
+			return "thymeleaf/login/login";
 	}
 
 	@PostMapping("/add")
@@ -69,9 +84,12 @@ public class BoardController {
 	}
 
 	@GetMapping("/editform/{bnum}")
-	private String editForm(@PathVariable int bnum, Model m) {
-		m.addAttribute("board", bs.getBoard(bnum));
-		return "thymeleaf/board/editform";
+	private String editForm(int bnum, Model m) {
+		if (session.getAttribute("memid") != null) {
+			m.addAttribute("board", bs.getBoard(bnum));
+			return "thymeleaf/board/editform";
+		} else
+			return "thymeleaf/login/login";
 	}
 
 	@PostMapping("/update")
