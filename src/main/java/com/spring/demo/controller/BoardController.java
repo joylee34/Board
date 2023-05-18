@@ -84,7 +84,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/editform/{bnum}")
-	private String editForm(int bnum, Model m) {
+	private String editForm(@PathVariable int bnum, Model m) {
 		if (session.getAttribute("memid") != null) {
 			m.addAttribute("board", bs.getBoard(bnum));
 			return "thymeleaf/board/editform";
