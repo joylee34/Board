@@ -31,7 +31,7 @@ public class LoginController {
 
 	@GetMapping("/login")
 	private String loginForm() {
-		log.info("conflict 생성중");
+		log.info("conflict 생성중!");
 		return "thymeleaf/login/login";
 	}
 
